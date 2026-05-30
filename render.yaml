@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: integração-fullstack-app
+    env: node
+    plan: free
+    region: oregon
+    branch: main
+
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+
+    # Deploy controlado pelo n8n — desabilita deploy automático por push
+    autoDeploy: false
+
+    healthCheckPath: /health
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+
+    # Adicione aqui suas variáveis secretas via Render Dashboard
+    # (Environment → Add Environment Variable)
+    #
+    # Exemplo:
+    #   - key: DATABASE_URL
+    #     sync: false      ← Render pede o valor manualmente (não vai para o repo)
